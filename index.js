@@ -10,6 +10,8 @@ const slugify = require('slugify');
 // our Own Modules after the core modules
 const replaceTemplate = require('./modules/replaceTemplate');
 
+
+
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, 'utf-8');
 const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`, 'utf-8');
 const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`, 'utf-8');
@@ -41,9 +43,7 @@ const server = http.createServer((req, res) => {
     if (pathname === '/' || pathname === '/overview') {
         res.writeHead(200, { 'Content-type': 'text/html' });
         // used join because we want a one single string and not an array
-        const cardsHtml = dataObject
-            .map((el) => replaceTemplate(tempCard, el))
-            .join('');
+        const cardsHtml = dataObject.map((el) => replaceTemplate(tempCard, el)).join('');
         const output = tempOverview.replace('{%PRODUCTS_CARDS%}', cardsHtml);
         res.end(output);
 
